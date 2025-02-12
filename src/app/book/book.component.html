@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="card mt-3">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center">Adicionar novo Livro</h2>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="newBookTitle" placeholder="Título do livro" required>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" [(ngModel)]="newAuthorName" placeholder="Nome Autor"required>
+            </div>
+            <div>
+                <label for="wasRead">Já foi lido?</label>
+                <input type="checkbox" id="wasRead" [(ngModel)]="wasRead">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" (click)="addBook()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center mt-5">Livros não Lidos</h2>
+    <ul class="list-group mt-3">
+        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let book of notReadBooks; index as i">
+            {{book.title}} {{book.author}}
+           <button class="btn btn-danger" (click)="deleteBook(book.id, notReadBooks, 'notReadBooks')">Deletar</button>
+        </li>
+    </ul>
+    <h2 class="text-center mt-5">Livros Lidos</h2>
+    <ul class="list-group mt-3">
+        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let book of wereRead">
+            {{book.title}} {{book.author}}
+           <button class="btn btn-danger" (click)="deleteBook(book.id, wereRead, 'wereRead')">Deletar</button>
+        </li>
+    </ul>
+
+</div>
