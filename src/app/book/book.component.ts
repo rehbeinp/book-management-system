@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Book } from '../models/book.model';
+import { Component, Type } from '@angular/core';
+import { Book, Status} from '../models/book.model';
 import { OnInit } from '@angular/core';
 
 @Component({
@@ -7,49 +7,57 @@ import { OnInit } from '@angular/core';
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.css']
 })
+export class BookComponent implements OnInit {  
 
-export class BookComponent implements OnInit {
+  private readonly storageName = "Books"
   newBookTitle: string = '';
-  newAuthorName: string = ''
-  notReadBooks: Book[] = [];
-  wasRead: boolean = false;
-  wereRead: Book[] = [];
+  newAuthorName: string = '';
+  newStatus: Status  = "unread";
+  newUpStatus: Status = "unread";
+  newDateStatus: Date = new Date();
+  books: Book[] = [];
 
   ngOnInit(): void {
-    let savedNotReadBooks = localStorage.getItem("notReadBooks");
-    this.notReadBooks = savedNotReadBooks ? JSON.parse(savedNotReadBooks) : [];
-    let savedWereRead = localStorage.getItem("wereRead");
-    this.wereRead = savedWereRead ? JSON.parse(savedWereRead) : [];
+    let savedBooks = localStorage.getItem(this.storageName);
+    this.books = savedBooks ? JSON.parse(savedBooks) : [];
   };
 
-  addBook() {
+  addBook(): void {
     if (this.newAuthorName.trim().length && this.newBookTitle.trim().length) {
       let newBook: Book = {
         id: Date.now(),
         title: this.newBookTitle,
-        author: this.newAuthorName
+        author: this.newAuthorName,
+        status: this.newStatus,
+        dateStatus: this.newDateStatus,
+        upStatus: this.newStatus
       };
 
-      if (this.wasRead) {
-        this.wereRead.push(newBook);
-      } else {
-        this.notReadBooks.push(newBook);
-      }
-
+      this.books.unshift(newBook);
       this.newAuthorName = "";
       this.newBookTitle = "";
-      this.wasRead = false;
+      this.newStatus = "unread";
+      this.newDateStatus = new Date();
 
-      localStorage.setItem("notReadBooks", JSON.stringify(this.notReadBooks));
-      localStorage.setItem("wereRead", JSON.stringify(this.wereRead))
+      localStorage.setItem(this.storageName, JSON.stringify(this.books));
     };
   };
 
+  updateStatus(id: number, updatingStatusValue: Status | "delete"){
+    let index = this.books.findIndex(book => book.id === id);
 
+    if(updatingStatusValue === "delete"){
+      this.books.splice(index, 1);
+    } else {
+      this.books[index].dateStatus = new Date();
+      this.books[index].status = updatingStatusValue;
+    }
+    localStorage.setItem(this.storageName, JSON.stringify(this.books));
+  }
 
-  deleteBook(id: number, array:Book[], element: string) { 
-    let index = array.findIndex(book => book.id === id);
-    array.splice(index, 1);
-    localStorage.setItem(element, JSON.stringify(array))
+  deleteBook(id:number) {
+    let index = this.books.findIndex(book => book.id === id);
+    this.books.splice(index, 1);
+    localStorage.setItem(this.storageName, JSON.stringify(this.books))
   }
 }

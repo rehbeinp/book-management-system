@@ -1,40 +1,90 @@
 <div class="container">
-    <div class="card mt-3">
-        <div class="row">
+    <div class="card mt-4">
+        <div class="row mt-3">
             <div class="col">
                 <h2 class="text-center">Adicionar novo Livro</h2>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-md-6">
+        <div class="row mt-2 g-3 m-3 d-flex align-items-center gap-3">
+            <div class="col-md-4">
                 <input class="form-control" [(ngModel)]="newBookTitle" placeholder="Título do livro" required>
             </div>
             <div class="col-md-4">
-                <input class="form-control" [(ngModel)]="newAuthorName" placeholder="Nome Autor"required>
+                <input class="form-control" [(ngModel)]="newAuthorName" placeholder="Nome Autor" required>
             </div>
-            <div>
-                <label for="wasRead">Já foi lido?</label>
-                <input type="checkbox" id="wasRead" [(ngModel)]="wasRead">
+
+            <div class="col-md-4 lead">
+                <label for="newStatus" class="me-2">Status</label>
+                <select [(ngModel)]="newStatus" id="newStatus" class="form-select form-select-sm w-auto">
+                    <option value="read" >Lido</option>
+                    <option value="reading" >Lendo</option>
+                    <option selected value="unread" >Nem Abri</option>
+                </select>
             </div>
+            <div class="col-md-4 lead" *ngIf="newStatus==='read'" id="dateStatus">
+                <label for="dateRead" class="me-2 form-date form-date-sm w-auto" placeholder="Data da conclusão">Data da
+                    conclusão</label>
+                <input type="date" [(ngModel)]="newDateStatus">
+            </div>
+        </div>
+
+        <div class="row mt-2 g-3 m-3">
             <div class="col-md-2">
-                <button class="btn btn-primary w-100" (click)="addBook()">Adicionar</button>
+                <button class="btn btn-outline-success w-100 mb-2" (click)="addBook()">Adicionar</button>
             </div>
         </div>
     </div>
 
-    <h2 class="text-center mt-5">Livros não Lidos</h2>
-    <ul class="list-group mt-3">
-        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let book of notReadBooks; index as i">
-            {{book.title}} {{book.author}}
-           <button class="btn btn-danger" (click)="deleteBook(book.id, notReadBooks, 'notReadBooks')">Deletar</button>
-        </li>
-    </ul>
-    <h2 class="text-center mt-5">Livros Lidos</h2>
-    <ul class="list-group mt-3">
-        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let book of wereRead">
-            {{book.title}} {{book.author}}
-           <button class="btn btn-danger" (click)="deleteBook(book.id, wereRead, 'wereRead')">Deletar</button>
-        </li>
-    </ul>
+    <hr>
 
+    <div class="row d-flex ">
+        <div class="col-md-6">
+            <h3 class="text-center mt-3">Livros não Lidos</h3>
+            <ul class="list-group mt-2">
+                <ng-container *ngFor="let book of books">
+                    <li class="list-group-item d-flex flex-column align-items-start" *ngIf="book.status != 'read'">
+                        <div class="row justify-content-between w-100">
+                            <div class="col-6 fw-semibold text-capitalize">
+                                {{book.title}} - {{book.author}}
+                            </div>
+                            <div class="col text-end text-uppercase fw-light">
+                                <em>({{book.status}})</em>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 mt-2">
+                            <label for="status" class="small mb-0">Mudar status</label>
+                            <select [(ngModel)]="book.upStatus" class="form-select form-select-sm w-auto">
+                                <option value="read">Lido</option>
+                                <option value="reading">Lendo</option>
+                                <option value="unread">Nem Abri</option>
+                                <option selected value="delete" class="text-bg-danger p-3">Delete</option>
+                            </select>
+
+                            <button *ngIf="book.upStatus!=book.status" class="btn btn-info btn-sm" (click)="updateStatus(book.id, book.upStatus)">Ir</button>
+                        </div>
+                    </li>
+                </ng-container>
+            </ul>
+
+        </div>
+
+        <div class="col-md-6">
+            <h3 class="text-center mt-3">Livros Lidos</h3>
+            <ul class="list-group mt-2">
+                <ng-container *ngFor="let book of books">
+                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                        *ngIf="book.status==='read'">
+                        <div class="row justify-content-between w-100">
+                            <div class="col-6 fw-semibold text-capitalize">
+                                {{book.title}}{{" - "}}{{book.author}}
+                            </div>
+                            <div class="col-6 fw-light">{{book.dateStatus | date:'yyyy-MM-dd'}}</div>
+                        </div>
+                        
+                        <button class="btn btn-danger btn-sm" (click)="deleteBook(book.id)">Deletar</button>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
 </div>
