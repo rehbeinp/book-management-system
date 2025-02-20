@@ -1,5 +1,16 @@
 # BookManagementSystem
+Sistema de Gerenciamento de Leituras – Angular & TypeScript:
+Este é um sistema simples desenvolvido em Angular, utilizando TypeScript, HTML e a biblioteca Bootstrap, com o objetivo de ajudar leitores individuais a gerenciar seus livros lidos e não lidos.
 
+Principais Funcionalidades:
+📚 Marcar livros como lidos, não lidos ou em leitura.
+📅 Registrar a data de conclusão da leitura.
+📂 Separar os livros em listas organizadas conforme o status de leitura.
+💾 Persistência de dados usando localStorage, garantindo que as informações sejam mantidas mesmo após recarregar a página.
+
+O projeto foi criado com foco na prática e aprendizado de tecnologias modernas como Angular e TypeScript, sem intenção de publicação online.
+
+## book-management-system
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
 
 ## Development server
@@ -25,6 +36,3 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
-# book-management-system
-Esse aplicativo foi desenvolvido com base em conhecimentos adquiridos durante um curso de Angular.
