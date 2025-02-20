@@ -3,10 +3,10 @@ Sistema de Gerenciamento de Leituras – Angular & TypeScript:
 Este é um sistema simples desenvolvido em Angular, utilizando TypeScript, HTML e a biblioteca Bootstrap, com o objetivo de ajudar leitores individuais a gerenciar seus livros lidos e não lidos.
 
 Principais Funcionalidades:
-📚 Marcar livros como lidos, não lidos ou em leitura.
-📅 Registrar a data de conclusão da leitura.
-📂 Separar os livros em listas organizadas conforme o status de leitura.
-💾 Persistência de dados usando localStorage, garantindo que as informações sejam mantidas mesmo após recarregar a página.
+* 📚 Marcar livros como lidos, não lidos ou em leitura.
+* 📅 Registrar a data de conclusão da leitura.
+* 📂 Separar os livros em listas organizadas conforme o status de leitura.
+* 💾 Persistência de dados usando localStorage, garantindo que as informações sejam mantidas mesmo após recarregar a página.
 
 O projeto foi criado com foco na prática e aprendizado de tecnologias modernas como Angular e TypeScript, sem intenção de publicação online.
 
